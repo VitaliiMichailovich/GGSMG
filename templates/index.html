@@ -1,0 +1,48 @@
+<!--index.html-->
+
+<!--Embed the header.html template at this location-->
+{{ template "header.html" .}}
+
+<!-- Intro Header -->
+<header class="intro">
+  <div class="intro-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h1 class="brand-heading">GGSMG</h1>
+          <p class="intro-text">
+            Site Map Generator
+          </p>
+          <a href="#contact" class="btn btn-circle page-scroll">
+            <i class="fa fa-angle-double-down animated"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Contact Section -->
+<section id="contact">
+  <div class="container content-section">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2">
+        <div class="done">
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            Your message has been sent. Thank you!
+          </div>
+        </div>
+        <form method="post" action="/g/" id="contactform">
+          <div class="form">
+            <input type="text" name="site" placeholder="Link On Site *">
+            <input type="text" name="email" placeholder="Your E-mail Address *">
+            <input type="submit" id="submit" class="clearfix btn" value="Send">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Embed the footer.html template at this location-->
+{{ template "footer.html" .}}
