@@ -18,6 +18,7 @@ jobs:
     ####   /go/src/github.com/circleci/go-tool
     ####   /go/src/bitbucket.org/circleci/go-tool
     working_directory: /go/src/github.com/VitaliiMichailovich/GGSMG
+
     steps:
       - checkout
       # specify any bash command here prefixed with `run: `
@@ -46,9 +47,9 @@ jobs:
 
 workflows:
   version: 2
-  build_and_test:
+  build_and_deploy:
     jobs:
       - build
-      - deploy
+      - deploy:
         requires:
           - build
