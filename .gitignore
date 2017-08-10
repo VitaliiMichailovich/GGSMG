@@ -1,5 +1,4 @@
-.idea*
-*file_saver*
-*parser*
-*uri*
-*.iml*
+.idea/
+GGSMG.iml
+parser/
+uri/
