@@ -29,12 +29,16 @@ jobs:
       - run: go build ./main.go
       - run: wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - run: heroku login
+
+      - run: echo "StrictHostKeyChecking=no" >> ~/.ssh/config
       - run: git remote add heroku git@heroku.com:ggsmg.git
-      - run: CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main
-      - run: docker build -t scratch -f Dockerfile .
-      - run: heroku plugins:install heroku-container-registry
-      - run: heroku container:login
-      - run: heroku container:push web
-      #- run: echo "StrictHostKeyChecking=no" >> ~/.ssh/config
+      - run: git push heroku master
+
+      ### Docker ###
+      # Work without static files
       #- run: git remote add heroku git@heroku.com:ggsmg.git
-      #- run: git push heroku master
+      #- run: CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main
+      #- run: docker build -t scratch -f Dockerfile .
+      #- run: heroku plugins:install heroku-container-registry
+      #- run: heroku container:login
+      #- run: heroku container:push web
