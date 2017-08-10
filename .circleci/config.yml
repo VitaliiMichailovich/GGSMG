@@ -30,11 +30,6 @@ jobs:
       - run: go build ./main.go
       - run: wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - run: heroku login
-  deploy:
-    docker:
-      - image: circleci/golang:1.8
-    working_directory: /go/src/github.com/VitaliiMichailovich/GGSMG
-    steps:
       - run: echo "StrictHostKeyChecking=no" >> ~/.ssh/config
       - run: git remote add heroku git@heroku.com:ggsmg.git
       - run: git push heroku master
@@ -53,4 +48,3 @@ workflows:
   build_and_deploy:
     jobs:
       - build
-      - deploy
