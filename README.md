@@ -1,1 +1,1 @@
-Initial
+GGSMG = Golang + Gin + Site + Map + Generator
