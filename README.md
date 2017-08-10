@@ -1,1 +1,1 @@
-GGSMG = Golang + Gin + Site + Map + Generator 
+GGSMG = Golang + Gin + Site + Map + Generator
