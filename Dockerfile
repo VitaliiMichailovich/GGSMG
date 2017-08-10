@@ -1,5 +1,5 @@
 FROM golang:onbuild
 COPY main /
-COPY client/ client/
-COPY templates/ templates/
+COPY client /
+COPY templates /
 CMD ["/main"]
