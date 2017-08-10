@@ -1,5 +1,7 @@
 FROM golang:onbuild
 COPY main /
-COPY client /
-COPY templates /
+RUN mkdir /client
+COPY client/* /client
+RUN mkdir /templates
+COPY templates/* /templates
 CMD ["/main"]
