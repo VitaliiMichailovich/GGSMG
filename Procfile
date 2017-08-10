@@ -1,1 +1,1 @@
-web: ggsmg
+web: GGSMG
