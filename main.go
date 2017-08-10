@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/VitaliiMichailovich/Sitemap/server"
+	"github.com/VitaliiMichailovich/GGSMG/server"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/contrib/static"
 )

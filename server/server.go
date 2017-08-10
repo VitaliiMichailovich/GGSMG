@@ -2,8 +2,8 @@ package server
 
 import (
 	//"fmt"
-	//"github.com/VitaliiMichailovich/Sitemap/parser"
-	//"github.com/VitaliiMichailovich/Sitemap/uri"
+	//"github.com/VitaliiMichailovich/GGSMG/parser"
+	//"github.com/VitaliiMichailovich/GGSMG/uri"
 	"net/http"
 	"github.com/gin-gonic/gin"
 )
