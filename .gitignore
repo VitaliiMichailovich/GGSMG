@@ -1,5 +1,5 @@
-.i*
-*.iml
+.idea*
 *file_saver*
 *parser*
 *uri*
+*.iml*
