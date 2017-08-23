@@ -13,7 +13,9 @@ func main() {
 	// Set the router as the default one provided by Gin
 	server.Router = gin.Default()
 
-	server.Router.Use(static.Serve("client", static.LocalFile("client", false)))
+	// Set up a static server.
+	server.Router.Use(static.Serve("client/", static.LocalFile("../client", true)))
+
 	// Process the templates at the start so that they don't have to be loaded
 	// from the disk again. This makes serving HTML pages very fast.
 	server.Router.LoadHTMLGlob("templates/*")

@@ -1,0 +1,37 @@
+<!--index.html-->
+
+<!--Embed the header.html template at this location-->
+{{ template "header.html" .}}
+
+<!-- Intro Header -->
+<header class="intro">
+  <div class="intro-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h1 class="brand-heading">GGSMG</h1>
+          <p class="intro-text">
+            Site Map Generator
+          </p>
+          <a href="#contact" class="btn btn-circle page-scroll">
+            <i class="fa fa-angle-double-down animated"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Page Sample Section -->
+<section id="page-sample">
+  <div class="container content-section text-left">
+    <div class="row">
+      <h2 class="text-center"> {{ .subtitle }}</h2>
+      <div class="col-lg-8 col-lg-offset-2">
+        {{ .text }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Embed the footer.html template at this location-->
+{{ template "footer.html" .}}
