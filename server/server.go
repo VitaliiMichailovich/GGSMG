@@ -6,27 +6,11 @@ import (
 	//"github.com/VitaliiMichailovich/GGSMG/uri"
 	"net/http"
 	"github.com/gin-gonic/gin"
-	"fmt"
 	"io/ioutil"
+	"github.com/gin-gonic/contrib/static"
 )
 
 var Router *gin.Engine
-
-//func LinkHandler(w http.ResponseWriter, r *http.Request) {
-//	url, err := uri.URI(r.RequestURI[6:])
-//	if err != nil {
-//		fmt.Println(err.Error())
-//	}
-//	parser.Links[url] = parser.Link{Count: 1, Checked: false}
-//	fmt.Println("Start:")
-//	_, err = parser.Parser(url)
-//	if err != nil {
-//		fmt.Println(err.Error())
-//	}
-//	//showMeLinks()
-//	w.Write([]byte("OK"))
-//
-//}
 
 func IndexHandler(c *gin.Context) {
 	// Call the render function with the name of the template to render
@@ -53,33 +37,42 @@ func AboutMeHandler(c *gin.Context) {
 
 func ContactHandler(c *gin.Context) {
 	// Call the render function with the name of the template to render
+	text := "<p> admin@micro.pp.ua </p>"
 	c.HTML(http.StatusOK, "pages.html", gin.H{
 		"title":    "Contact",
 		"subtitle": "Contact",
-		"text":     "<p> admin@micro.pp.ua </p>"})
+		"text":     text})
 }
 
 func PostHandler(c *gin.Context) {
-	x, _ := ioutil.ReadAll(c.Request.Body)
-	fmt.Printf("%s", string(x))
-	c.HTML(http.StatusOK, "pages.html", gin.H{
-		"title":    "g",
-		"subtitle": "g",
-		"text":     x})
+	x, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		c.Data(200, "text/html; charset=utf-8", []byte(err.Error()))
+	}
+	c.Data(200, "text/html; charset=utf-8", x[:])
 }
 
 func Server() {
-	// Handle the index route
+	// Set Gin to production mode
+	gin.SetMode(gin.ReleaseMode)
+
+	// Set the router as the default one provided by Gin
+	Router = gin.Default()
+
+	// Set up a static server.
+	Router.Use(static.Serve("/client/", static.LocalFile("./client", true)))
+
+	// Process the templates at the start so that they don't have to be loaded
+	// from the disk again. This makes serving HTML pages very fast.
+	Router.LoadHTMLGlob("templates/*")
+
+	// Links handlers
 	Router.GET("/", IndexHandler)
 	Router.GET("/p/", ProjectHandler)
 	Router.GET("/i/", AboutMeHandler)
 	Router.GET("/c/", ContactHandler)
-	Router.POST("/p/", PostHandler)
+	Router.POST("/", PostHandler)
 
-	//http.Handle("/client/", http.StripPrefix("/client/", http.FileServer(http.Dir("./client/"))))
-	//http.HandleFunc("/", IndexHandler)
-	//http.HandleFunc("/link/", HandleLink)
-	////port := os.Getenv("PORT")
-	////http.ListenAndServe(":"+port, nil)
-	//http.ListenAndServe(":7777", nil)
+	// Start serving the application
+	Router.Run()
 }
