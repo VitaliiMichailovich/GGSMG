@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"github.com/gin-gonic/contrib/static"
+	"html/template"
 )
 
 var Router *gin.Engine
@@ -32,7 +33,7 @@ func AboutMeHandler(c *gin.Context) {
 	c.HTML(http.StatusOK, "pages.html", gin.H{
 		"title":    "About Me",
 		"subtitle": "About Me",
-		"text":     "<p> I just trying to improve my GoLang skills. </p>"})
+		"text":     template.HTML("<p> I just trying to improve my GoLang skills. </p>")})
 }
 
 func ContactHandler(c *gin.Context) {
