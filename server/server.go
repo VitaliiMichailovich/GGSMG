@@ -4,11 +4,11 @@ import (
 	//"fmt"
 	//"github.com/VitaliiMichailovich/GGSMG/parser"
 	//"github.com/VitaliiMichailovich/GGSMG/uri"
-	"net/http"
-	"github.com/gin-gonic/gin"
-	"io/ioutil"
 	"github.com/gin-gonic/contrib/static"
+	"github.com/gin-gonic/gin"
 	"html/template"
+	"io/ioutil"
+	"net/http"
 )
 
 var Router *gin.Engine
@@ -16,8 +16,8 @@ var Router *gin.Engine
 func IndexHandler(c *gin.Context) {
 	// Call the render function with the name of the template to render
 	c.HTML(http.StatusOK, "index.html", gin.H{
-		"title":   "IndexHandler",
-		"text": ""})
+		"title": "IndexHandler",
+		"text":  template.HTML("")})
 }
 
 func ProjectHandler(c *gin.Context) {
@@ -25,7 +25,7 @@ func ProjectHandler(c *gin.Context) {
 	c.HTML(http.StatusOK, "pages.html", gin.H{
 		"title":    "About Project",
 		"subtitle": "About Project",
-		"text":     "<p>This project is a simple Golang+Gin project which is a result of my studying in IT Academy. </p> <p> What is it doing? Its parsing an index page in your web site, looking for a links in html. </p> <p> If it's the same like a domane it's and it'll check this link later. If it's contains '@', another domain or file extension it's ignoring. </p> <p> After checking all links It's has all links of your web-site. Next step it's creating a 'Sitemap.xml' file and send it to user's e-mail. </p>"})
+		"text":     template.HTML("<p>This project is a simple Golang+Gin project which is a result of my studying in IT Academy. </p> <p> What is it doing? Its parsing an index page in your web site, looking for a links in html. </p> <p> If it's the same like a domane it's and it'll check this link later. If it's contains '@', another domain or file extension it's ignoring. </p> <p> After checking all links It's has all links of your web-site. Next step it's creating a 'Sitemap.xml' file and send it to user's e-mail. </p>")})
 }
 
 func AboutMeHandler(c *gin.Context) {
@@ -42,7 +42,7 @@ func ContactHandler(c *gin.Context) {
 	c.HTML(http.StatusOK, "pages.html", gin.H{
 		"title":    "Contact",
 		"subtitle": "Contact",
-		"text":     text})
+		"text":     template.HTML(text)})
 }
 
 func PostHandler(c *gin.Context) {
