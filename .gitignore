@@ -1,5 +1,7 @@
 .idea/
 GGSMG.iml
-parser/
 uri/
-_Dockerfile
+Dockerfile
+*.exe
+*.txt
+_*
