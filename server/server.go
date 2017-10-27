@@ -1,13 +1,11 @@
 package server
 
 import (
-	//"fmt"
-	//"github.com/VitaliiMichailovich/GGSMG/parser"
-	//"github.com/VitaliiMichailovich/GGSMG/uri"
+	"fmt"
+	"github.com/VitaliiMichailovich/GGSMG/checkIn"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"html/template"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -46,11 +44,16 @@ func ContactHandler(c *gin.Context) {
 }
 
 func PostHandler(c *gin.Context) {
-	x, err := ioutil.ReadAll(c.Request.Body)
+	mail, err := checkIn.EmailFixer(c.PostForm("email"))
 	if err != nil {
-		c.Data(200, "text/html; charset=utf-8", []byte(err.Error()))
+		c.Data(200, "text/html; charset=utf-8", err.Error())
 	}
-	c.Data(200, "text/html; charset=utf-8", x[:])
+	domain, err := checkIn.DomainFixer(c.PostForm("site"))
+	if err != nil {
+		c.Data(200, "text/html; charset=utf-8", err.Error())
+	}
+	fmt.Println(domain, mail)
+	c.Data(200, "text/html; charset=utf-8", nil)
 }
 
 func Server() {

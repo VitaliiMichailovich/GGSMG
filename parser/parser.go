@@ -55,36 +55,11 @@ func Parser(uri string) (map[string]link, error) {
 		summ := len(links)
 		mutex.RUnlock()
 		fmt.Printf("Total links:\t%v\t\tChecked:\t%v\t\tRunning:\t%v\t\tRuned:\t%v\n", summ, checked, runned, run)
-		//if summ == 3998 && checked == 3596 && runned == 402 && run == 0 {
-		//	// Need to solve this problem
-		//	mutex.RLock()
-		//	for k, v := range Links {
-		//		if v.Checked == false && v.Routine == true {
-		//			fmt.Println(k)
-		//		}
-		//	}
-		//	mutex.RUnlock()
-		//	break
-		//}
-		//if summ == checked+1 {
-		//	mutex.RLock()
-		//	fmt.Println("Links len 0 : " + strconv.Itoa(len(Links)))
-		//	mutex.RUnlock()
-		//	time.Sleep(time.Second * 2)
-		//}
 		if summ == checked {
-			//mutex.RLock()
-			//fmt.Println("Links len 1 : " + strconv.Itoa(len(Links)))
-			//mutex.RUnlock()
 			break
 		}
 	}
 	wg.Wait()
-	//mutex.RLock()
-	//for k, v := range Links {
-	//	fmt.Println(k, v)
-	//}
-	//mutex.RUnlock()
 	return links, nil
 }
 
@@ -92,7 +67,6 @@ func linksWriter(linka, uri string) {
 	defer wg.Done()
 	response, err := http.Get(linka)
 	if err != nil {
-		//fmt.Println(err.Error())
 		mutex.Lock()
 		links[linka] = link{Checked: false, Count: links[linka].Count, Routine: false}
 		mutex.Unlock()
@@ -110,7 +84,6 @@ func linksWriter(linka, uri string) {
 		mutex.Lock()
 		links[linka] = link{Checked: true, Count: links[linka].Count, Routine: false}
 		mutex.Unlock()
-		//fmt.Println("Not Status OK -------------------------- ", response.StatusCode, link)
 		response.Body.Close()
 		return
 	}
