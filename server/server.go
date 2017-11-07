@@ -46,11 +46,15 @@ func ContactHandler(c *gin.Context) {
 func PostHandler(c *gin.Context) {
 	mail, err := checkIn.EmailFixer(c.PostForm("email"))
 	if err != nil {
-		c.Data(200, "text/html; charset=utf-8", err.Error())
+		c.Data(200, "text/html; charset=utf-8", []byte(err.Error()))
+		fmt.Println(err.Error())
+		return
 	}
 	domain, err := checkIn.DomainFixer(c.PostForm("site"))
 	if err != nil {
-		c.Data(200, "text/html; charset=utf-8", err.Error())
+		c.Data(200, "text/html; charset=utf-8", []byte(err.Error()))
+		fmt.Println(err.Error())
+		return
 	}
 	fmt.Println(domain, mail)
 	c.Data(200, "text/html; charset=utf-8", nil)

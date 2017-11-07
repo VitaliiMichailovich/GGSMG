@@ -54,7 +54,7 @@ func Parser(uri string) (map[string]link, error) {
 		mutex.RLock()
 		summ := len(links)
 		mutex.RUnlock()
-		fmt.Printf("Total links:\t%v\t\tChecked:\t%v\t\tRunning:\t%v\t\tRuned:\t%v\n", summ, checked, runned, run)
+		//fmt.Printf("Total links:\t%v\t\tChecked:\t%v\t\tRunning:\t%v\t\tRuned:\t%v\n", summ, checked, runned, run)
 		if summ == checked {
 			break
 		}

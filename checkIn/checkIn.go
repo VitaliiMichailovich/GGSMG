@@ -12,13 +12,13 @@ var domainRegexp = regexp.MustCompile(`^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|
 
 func EmailFixer(email string) (string, error) {
 	if !emailRegexp.MatchString(email) {
-		return email, errors.New("invalid format")
+		return email, errors.New("Invalid email format. Please correct your email adress and send again.")
 	}
 
 	_, host := split(email)
 	_, err := net.LookupMX(host)
 	if err != nil {
-		return email, errors.New("unresolvable host")
+		return email, errors.New("Unresolvable host of email. Please correct your email adress and send again.")
 	}
 
 	return email, nil
@@ -41,7 +41,7 @@ func DomainFixer(domain string) (string, error) {
 		domain = strings.Replace(domain, "https://", "", 1)
 	}
 	if !domainRegexp.MatchString(domain) {
-		return domain, errors.New("invalid format")
+		return domain, errors.New("Invalid domain format. Please correct domain and send it again.")
 	}
 	return prefix + domain, nil
 }
