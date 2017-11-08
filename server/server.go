@@ -3,11 +3,11 @@ package server
 import (
 	"fmt"
 	"github.com/VitaliiMichailovich/GGSMG/checkIn"
+	"github.com/VitaliiMichailovich/GGSMG/email"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"net/http"
-	"github.com/VitaliiMichailovich/GGSMG/email"
 )
 
 var Router *gin.Engine
