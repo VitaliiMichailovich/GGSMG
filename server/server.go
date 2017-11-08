@@ -8,7 +8,6 @@ import (
 	"html/template"
 	"net/http"
 	"github.com/VitaliiMichailovich/GGSMG/email"
-	"github.com/golang/protobuf/_conformance/conformance_proto"
 )
 
 var Router *gin.Engine
