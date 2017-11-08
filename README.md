@@ -11,4 +11,5 @@ To look how it works you can go to [http://ggsmg.herokuapp.com/](http://ggsmg.he
 1. ~~Implement correct error messages from checkIn package.~~ **DONE 07.11.2017**
 1. Create sitemap.xml file generator.
 1. Create smtp sender with attaching sitemap.xml file.
+1. Tests
 1. TBD...

@@ -7,6 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"net/http"
+	"github.com/VitaliiMichailovich/GGSMG/email"
+	"github.com/golang/protobuf/_conformance/conformance_proto"
 )
 
 var Router *gin.Engine
@@ -56,7 +58,10 @@ func PostHandler(c *gin.Context) {
 		fmt.Println(err.Error())
 		return
 	}
-	fmt.Println(domain, mail)
+	err = email.Email(domain, mail)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 	c.Data(200, "text/html; charset=utf-8", nil)
 }
 
