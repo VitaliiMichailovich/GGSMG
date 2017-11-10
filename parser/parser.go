@@ -1,8 +1,6 @@
-//package parser
-package main
+package parser
 
 import (
-	"fmt"
 	"golang.org/x/net/html"
 	"net/http"
 	"strings"
@@ -10,25 +8,25 @@ import (
 	"time"
 )
 
-type link struct {
+type Link struct {
 	Count   int
 	Checked bool
 	Routine bool
 }
 
-var links = make(map[string]link)
+var links = make(map[string]Link)
 
 var mutex = &sync.RWMutex{}
 
 var wg = sync.WaitGroup{}
 
-func Parser(uri string) (map[string]link, error) {
+func Parser(uri string) (map[string]Link, error) {
 	mutex.Lock()
-	links[uri] = link{Count: 1, Checked: false, Routine: false}
+	links[uri] = Link{Count: 1, Checked: false, Routine: false}
 	mutex.Unlock()
 	for {
 		mutex.RLock()
-		li := make(map[string]link, len(links))
+		li := make(map[string]Link, len(links))
 		for key, value := range links {
 			li[key] = value
 		}
@@ -38,7 +36,7 @@ func Parser(uri string) (map[string]link, error) {
 			if v.Checked == false {
 				if v.Routine == false {
 					mutex.Lock()
-					links[k] = link{Count: links[k].Count, Checked: links[k].Checked, Routine: true}
+					links[k] = Link{Count: links[k].Count, Checked: links[k].Checked, Routine: true}
 					mutex.Unlock()
 					run++
 					wg.Add(1)
@@ -68,21 +66,21 @@ func linksWriter(linka, uri string) {
 	response, err := http.Get(linka)
 	if err != nil {
 		mutex.Lock()
-		links[linka] = link{Checked: false, Count: links[linka].Count, Routine: false}
+		links[linka] = Link{Checked: false, Count: links[linka].Count, Routine: false}
 		mutex.Unlock()
 		return
 	}
 	defer response.Body.Close()
 	if response.StatusCode >= 501 {
 		mutex.Lock()
-		links[linka] = link{Checked: false, Count: links[linka].Count, Routine: false}
+		links[linka] = Link{Checked: false, Count: links[linka].Count, Routine: false}
 		mutex.Unlock()
 		response.Body.Close()
 		return
 	}
 	if response.StatusCode != http.StatusOK {
 		mutex.Lock()
-		links[linka] = link{Checked: true, Count: links[linka].Count, Routine: false}
+		links[linka] = Link{Checked: true, Count: links[linka].Count, Routine: false}
 		mutex.Unlock()
 		response.Body.Close()
 		return
@@ -107,12 +105,12 @@ func linksWriter(linka, uri string) {
 						continue top
 					}
 					mutex.Lock()
-					links[url] = link{Count: links[url].Count + 1, Checked: links[url].Checked, Routine: links[url].Routine}
+					links[url] = Link{Count: links[url].Count + 1, Checked: links[url].Checked, Routine: links[url].Routine}
 					mutex.Unlock()
 				}
 			}
 			mutex.Lock()
-			links[linka] = link{Checked: true, Count: links[linka].Count, Routine: false}
+			links[linka] = Link{Checked: true, Count: links[linka].Count, Routine: false}
 			mutex.Unlock()
 		} else {
 
@@ -163,8 +161,4 @@ func getHref(t html.Token, uri string) (ok bool, href string) {
 		}
 	}
 	return ok, href
-}
-
-func main() {
-	Parser("http://library.dp.ua/")
 }
