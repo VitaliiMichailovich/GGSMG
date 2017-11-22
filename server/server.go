@@ -3,7 +3,7 @@ package server
 import (
 	"fmt"
 	"github.com/VitaliiMichailovich/GGSMG/checkIn"
-	"github.com/VitaliiMichailovich/GGSMG/email"
+	"github.com/VitaliiMichailovich/GGSMG/sender"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"html/template"
@@ -57,7 +57,7 @@ func PostHandler(c *gin.Context) {
 		fmt.Println(err.Error())
 		return
 	}
-	err = email.Email(domain, mail)
+	err = sender.Email(domain, mail)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
