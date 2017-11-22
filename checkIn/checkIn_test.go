@@ -1,6 +1,9 @@
 package checkIn
 
-import "testing"
+import (
+	"testing"
+	"errors"
+)
 
 var testCaseEmailFixer = []struct {
 	email string
@@ -8,6 +11,8 @@ var testCaseEmailFixer = []struct {
 	err error
 }{
 	{"vitaliy@online.ua", "vitaliy@online.ua", nil},
+	{"vitaliy", "vitaliy", errors.New("Invalid email format. Please correct your email adress and send again.")},
+	{"vitaliy@an.on", "vitaliy@an.on", errors.New("Unresolvable host of email. Please correct your email adress and send again.")},
 }
 
 var testCaseDomainFixer = []struct {
@@ -17,6 +22,9 @@ var testCaseDomainFixer = []struct {
 }{
 	{"library.dp.ua", "http://library.dp.ua", nil},
 	{"library.dp", "http://library.dp", nil},
+	{"http://library.dp", "http://library.dp", nil},
+	{"https://library.dp", "https://library.dp", nil},
+	{"http://library/", "library/", errors.New("Invalid domain format. Please correct domain and send it again.")},
 }
 
 func TestEmailFixer(t *testing.T) {
