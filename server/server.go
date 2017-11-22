@@ -3,11 +3,13 @@ package server
 import (
 	"fmt"
 	"github.com/VitaliiMichailovich/GGSMG/checkIn"
-	"github.com/VitaliiMichailovich/GGSMG/sender"
+	//"github.com/VitaliiMichailovich/GGSMG/sender"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"net/http"
+	"github.com/VitaliiMichailovich/GGSMG/parser"
+	"github.com/VitaliiMichailovich/GGSMG/xmlworker"
 )
 
 var Router *gin.Engine
@@ -57,10 +59,28 @@ func PostHandler(c *gin.Context) {
 		fmt.Println(err.Error())
 		return
 	}
-	err = sender.Email(domain, mail)
+	links, err := parser.Parser(domain)
 	if err != nil {
+		c.Data(200, "text/html; charset=utf-8", []byte(err.Error()))
 		fmt.Println(err.Error())
+		return
 	}
+	xmlFile, err := xmlgen.StyleCreator(links, domain)
+	if err != nil {
+		c.Data(200, "text/html; charset=utf-8", []byte(err.Error()))
+		fmt.Println(err.Error())
+		return
+	}
+	err = xmlgen.FileWriter(domain, xmlFile)
+	if err != nil {
+		c.Data(200, "text/html; charset=utf-8", []byte(err.Error()))
+		fmt.Println(err.Error())
+		return
+	}
+	//err = sender.Email(domain, mail)
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//}
 	c.Data(200, "text/html; charset=utf-8", nil)
 }
 
